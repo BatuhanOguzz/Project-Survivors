@@ -615,12 +615,19 @@ namespace Synty.AnimationBaseLocomotion.Samples
         #region Updates
 
         /// <inheritdoc cref="Update" />
+        /// 
+
+        private float attackInterval = 1f; // Saniyede bir saldýrý
+        private float lastAttackTime = 0f;
+
+
         private void Update()
         {
             // Mouse sol tuþ ile AttackTrigger tetikleme
-            if (Input.GetMouseButtonDown(0))
+            if (Time.time - lastAttackTime >= attackInterval)
             {
                 _animator.SetTrigger(_attackTriggerHash);
+                lastAttackTime = Time.time;
             }
 
             switch (_currentState)
