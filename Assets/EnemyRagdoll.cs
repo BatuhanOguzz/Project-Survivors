@@ -17,9 +17,13 @@ public class EnemyRagdoll : MonoBehaviour
             rb.isKinematic = !enabled;
         foreach (var col in ragdollColliders)
             col.enabled = enabled;
-
         if (animator != null)
             animator.enabled = !enabled;
+
+        // Ana Mesh Collider'ý kapat
+        var mainCol = GetComponent<MeshCollider>();
+        if (mainCol != null)
+            mainCol.enabled = !enabled;
     }
 
     public void ActivateRagdoll()

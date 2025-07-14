@@ -27,9 +27,21 @@ public class EnemyHealth : MonoBehaviour
     {
         isDead = true;
         onDeath?.Invoke();
-        // Ragdoll aç
-        GetComponent<EnemyRagdoll>().ActivateRagdoll();
-        // EnemyAI gibi scriptleri devre dýþý býrakabilirsin
+
+        // Animator'u kapat
+        var ragdoll = GetComponent<EnemyRagdoll>();
+        if (ragdoll != null)
+            ragdoll.ActivateRagdoll();
+
+        // EnemyAI gibi scriptleri devre dýþý býrak
+        var ai = GetComponent<EnemyAI>();
+        if (ai != null)
+            ai.enabled = false;
+
+        var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if (agent != null)
+            agent.enabled = false;
+
         Destroy(gameObject, 4f); // Ragdoll birkaç sn sonra temizlenir
     }
 }
