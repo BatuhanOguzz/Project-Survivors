@@ -4,35 +4,45 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance;
-    public List<EnemyAI> enemies = new List<EnemyAI>();
+
+    [Header("Oyuncu Referansý")]
     public Transform player;
 
-    void Awake()
-    {
-        Instance = this;
-    }
+    [Header("Sahnedeki Düþmanlar")]
+    public List<EnemyAI> enemies = new List<EnemyAI>();
 
-    void Update()
+    private void Awake()
     {
-        Vector3 currentPlayerPosition = player.position; // HER UPDATE'DE EN GÜNCEL POZÝSYON!
-        foreach (var enemy in enemies)
+        // Singleton eriþimi
+        if (Instance == null)
         {
-            if (enemy != null)
-                enemy.ManualUpdate(currentPlayerPosition);
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject); // Çift instance varsa sil
         }
     }
 
-
-    // Düþmanlar kendini buraya ekler
+    /// <summary>
+    /// Bir düþmaný listeye kaydeder.
+    /// </summary>
     public void RegisterEnemy(EnemyAI enemy)
     {
         if (!enemies.Contains(enemy))
+        {
             enemies.Add(enemy);
+        }
     }
 
+    /// <summary>
+    /// Bir düþmaný listeden çýkarýr.
+    /// </summary>
     public void UnregisterEnemy(EnemyAI enemy)
     {
         if (enemies.Contains(enemy))
+        {
             enemies.Remove(enemy);
+        }
     }
 }
