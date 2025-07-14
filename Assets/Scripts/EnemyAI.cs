@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public float speed = 3f;
-    public float attackDistance = 2.5f; // Saldýrý menzili
+    public float attackDistance = 100f; // Saldýrý menzili
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -44,6 +44,6 @@ public class EnemyAI : MonoBehaviour
         animator.SetBool("isAttacking", isAttacking);
 
         // Saldýrý sýrasýnda durmasýný istiyorsan bunu aç:
-        // agent.isStopped = isAttacking;
+         agent.isStopped = isAttacking;
     }
 }
