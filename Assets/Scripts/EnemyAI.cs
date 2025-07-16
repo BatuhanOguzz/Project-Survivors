@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public float speed = 3f;
-    public float attackDistance = 100f; // Saldýrý menzili
+    public float attackDistance = 1f; // Saldýrý menzili
 
     private NavMeshAgent agent;
     private Animator animator;

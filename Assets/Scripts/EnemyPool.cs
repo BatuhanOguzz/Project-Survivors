@@ -4,39 +4,59 @@ using UnityEngine;
 public class EnemyPool : MonoBehaviour
 {
     public static EnemyPool Instance;
-    public GameObject enemyPrefab;
+    public GameObject[] enemyPrefabs; // Birden fazla prefab
     public int poolSize = 20;
 
-    private Queue<GameObject> pool = new Queue<GameObject>();
+    private Dictionary<GameObject, Queue<GameObject>> pools = new Dictionary<GameObject, Queue<GameObject>>();
 
     void Awake()
     {
         Instance = this;
-        for (int i = 0; i < poolSize; i++)
+        foreach (var prefab in enemyPrefabs)
         {
-            GameObject obj = Instantiate(enemyPrefab, Vector3.zero, Quaternion.identity);
-            obj.SetActive(false);
-            pool.Enqueue(obj);
+            var queue = new Queue<GameObject>();
+            for (int i = 0; i < poolSize; i++)
+            {
+                GameObject obj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+                obj.SetActive(false);
+                queue.Enqueue(obj);
+            }
+            pools.Add(prefab, queue);
         }
     }
 
-    public GameObject GetEnemy(Vector3 position)
+    public GameObject GetEnemy(GameObject prefab, Vector3 position)
     {
+        if (!pools.ContainsKey(prefab))
+        {
+            // Prefab için pool yoksa oluþtur
+            pools[prefab] = new Queue<GameObject>();
+        }
+
+        var pool = pools[prefab];
+        GameObject enemy;
+
         if (pool.Count == 0)
         {
-            // Pool bitti, yeni oluþtur (veya yok say)
-            GameObject obj = Instantiate(enemyPrefab, position, Quaternion.identity);
-            return obj;
+            // Pool boþsa yeni oluþtur
+            enemy = Instantiate(prefab, position, Quaternion.identity);
         }
-        GameObject enemy = pool.Dequeue();
-        enemy.transform.position = position;
-        enemy.SetActive(true);
+        else
+        {
+            enemy = pool.Dequeue();
+            enemy.transform.position = position;
+            enemy.SetActive(true);
+        }
         return enemy;
     }
 
-    public void ReturnEnemy(GameObject enemy)
+    public void ReturnEnemy(GameObject prefab, GameObject enemy)
     {
         enemy.SetActive(false);
-        pool.Enqueue(enemy);
+        if (!pools.ContainsKey(prefab))
+        {
+            pools[prefab] = new Queue<GameObject>();
+        }
+        pools[prefab].Enqueue(enemy);
     }
 }

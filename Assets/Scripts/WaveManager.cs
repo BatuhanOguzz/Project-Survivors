@@ -3,7 +3,9 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     public Transform player;
-    public GameObject enemyPrefab;
+
+    // Burada prefab dizisi kullan
+    public GameObject[] enemyPrefabs;
     public int enemyCount = 5;
     public float spawnRadius = 10f;
     public LayerMask groundLayer;
@@ -26,8 +28,12 @@ public class WaveManager : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, groundLayer))
             {
                 spawnPos.y = hit.point.y;
-                GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-                enemy.GetComponent<EnemyHealth>().onDeath += OnEnemyDeath; // Ölünce haber almak için
+
+                // Burada random veya sýralý prefab seç
+                int randomIndex = Random.Range(0, enemyPrefabs.Length);
+                GameObject enemy = Instantiate(enemyPrefabs[randomIndex], spawnPos, Quaternion.identity);
+
+                enemy.GetComponent<EnemyHealth>().onDeath += OnEnemyDeath;
                 enemiesAlive++;
             }
         }
@@ -39,7 +45,7 @@ public class WaveManager : MonoBehaviour
         if (enemiesAlive <= 0)
         {
             Debug.Log("Wave bitti!");
-            // Sonraki wave’i burada baþlatabilirsin (ileride)
+            // Sonraki wave’i burada baþlatabilirsin
         }
     }
 }
