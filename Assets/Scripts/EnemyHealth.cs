@@ -10,7 +10,7 @@ public class EnemyHealth : MonoBehaviour
 
     [Header("XP Ayarları")]
     public GameObject xpOrbPrefab; // Inspector’dan ata
-    public int xpAmount = 5;       // Bu düşmanın verdiği XP (farklı set edebilirsin)
+    public int xpAmount = 5;       // Bu düşmanın verdiği XP
 
     void Awake()
     {
@@ -32,14 +32,13 @@ public class EnemyHealth : MonoBehaviour
         isDead = true;
         onDeath?.Invoke();
 
-        DropXP(); // <<<<<<<<<< XP orb bırakma
+        DropXP();
 
-        // Animator'u kapat
+        // (Ragdoll/AI/agent kapama kısmı aynen kalsın)
         var ragdoll = GetComponent<EnemyRagdoll>();
         if (ragdoll != null)
             ragdoll.ActivateRagdoll();
 
-        // EnemyAI gibi scriptleri devre dışı bırak
         var ai = GetComponent<EnemyAI>();
         if (ai != null)
             ai.enabled = false;
@@ -48,20 +47,24 @@ public class EnemyHealth : MonoBehaviour
         if (agent != null)
             agent.enabled = false;
 
-        Destroy(gameObject, 4f); // Ragdoll birkaç sn sonra temizlenir
+        Destroy(gameObject, 4f);
     }
 
     void DropXP()
     {
         if (xpOrbPrefab != null)
         {
-            Vector3 orbPos = transform.position + Vector3.up; // 1 birim yukarı
+            Vector3 orbPos = transform.position + Vector3.up;
             GameObject orb = Instantiate(xpOrbPrefab, orbPos, Quaternion.identity);
             XPOrb orbScript = orb.GetComponent<XPOrb>();
             if (orbScript != null)
             {
                 orbScript.xpAmount = xpAmount;
             }
+        }
+        else
+        {
+            Debug.LogWarning($"{gameObject.name}: xpOrbPrefab atanmadı! Inspector’dan prefab atamayı unutma.");
         }
     }
 }
