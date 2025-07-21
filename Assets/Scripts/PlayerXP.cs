@@ -23,8 +23,13 @@ public class PlayerXP : MonoBehaviour
         {
             Debug.LogWarning("XP Slider referansı atanmadı!");
         }
-    }
 
+        // Level text'i başta güncelle
+        if (levelText != null)
+        {
+            levelText.text = "Level: " + level;
+        }
+    }
 
     public void AddXP(int amount)
     {
@@ -47,10 +52,10 @@ public class PlayerXP : MonoBehaviour
             Debug.LogWarning("XP Slider bağlı değil!");
         }
 
-        // Level Text'i güncelle (seviye atlama olmadan da çağırmak istersen)
+        // Level Text'i güncelle
         if (levelText != null)
         {
-            levelText.text = level.ToString();
+            levelText.text = "Level: " + level;
         }
     }
 
@@ -72,7 +77,7 @@ public class PlayerXP : MonoBehaviour
         // Level Text'i güncelle
         if (levelText != null)
         {
-            levelText.text = level.ToString();
+            levelText.text = "Level: " + level;
         }
 
         Debug.Log("LEVEL UP! Yeni seviye: " + level);

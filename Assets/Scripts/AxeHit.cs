@@ -16,7 +16,7 @@ public class AxeHit : MonoBehaviour
                 health.TakeDamage(damage);
             }
 
-            // Kan efekti oluþtur
+            // Kan efekti oluï¿½tur
             if (bloodParticlePrefab != null)
             {
                 Vector3 hitPoint = other.ClosestPoint(transform.position);
