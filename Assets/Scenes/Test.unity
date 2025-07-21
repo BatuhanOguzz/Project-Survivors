@@ -1466,7 +1466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78b64f1c3b48f5c4da9ef20177aca41b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bloodParticlePrefab: {fileID: 1026642433091512, guid: ed67c2cb8e3a7fb418c6fbb1b001dce2, type: 3}
+  bloodParticlePrefab: {fileID: 1407402442211574, guid: 5d31a5b9b348544439d8079453188ecc, type: 3}
   damage: 40
 --- !u!1 &1067086124
 GameObject:
