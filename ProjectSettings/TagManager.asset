@@ -12,9 +12,9 @@ TagManager:
   - Graound
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - DeadEnemy
   - 
   - 
   - 

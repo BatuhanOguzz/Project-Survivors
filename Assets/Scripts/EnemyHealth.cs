@@ -9,8 +9,8 @@ public class EnemyHealth : MonoBehaviour
     private bool isDead = false;
 
     [Header("XP Ayarları")]
-    public GameObject xpOrbPrefab; // Inspector’dan ata
-    public int xpAmount = 5;       // Bu düşmanın verdiği XP
+    public GameObject xpOrbPrefab;
+    public int xpAmount = 5;
 
     void Awake()
     {
@@ -22,9 +22,7 @@ public class EnemyHealth : MonoBehaviour
         if (isDead) return;
         currentHealth -= amount;
         if (currentHealth <= 0)
-        {
             Die();
-        }
     }
 
     void Die()
@@ -34,7 +32,8 @@ public class EnemyHealth : MonoBehaviour
 
         DropXP();
 
-        // (Ragdoll/AI/agent kapama kısmı aynen kalsın)
+        SetLayerRecursively(transform, "DeadEnemy"); // 💀 Cesedi player'dan ayır
+
         var ragdoll = GetComponent<EnemyRagdoll>();
         if (ragdoll != null)
             ragdoll.ActivateRagdoll();
@@ -58,13 +57,21 @@ public class EnemyHealth : MonoBehaviour
             GameObject orb = Instantiate(xpOrbPrefab, orbPos, Quaternion.identity);
             XPOrb orbScript = orb.GetComponent<XPOrb>();
             if (orbScript != null)
-            {
                 orbScript.xpAmount = xpAmount;
-            }
         }
         else
         {
             Debug.LogWarning($"{gameObject.name}: xpOrbPrefab atanmadı! Inspector’dan prefab atamayı unutma.");
+        }
+    }
+
+    // ✅ Tüm alt objelerin layer'ını değiştirir
+    void SetLayerRecursively(Transform obj, string layerName)
+    {
+        int layer = LayerMask.NameToLayer(layerName);
+        foreach (Transform child in obj.GetComponentsInChildren<Transform>(true))
+        {
+            child.gameObject.layer = layer;
         }
     }
 }
