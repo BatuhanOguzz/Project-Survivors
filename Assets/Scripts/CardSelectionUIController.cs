@@ -23,9 +23,6 @@ public class CardSelectionUIController : MonoBehaviour
         gameObject.SetActive(false); // Başlangıçta gizli tutmak daha iyi, istediğinde Show3RandomCards ile açılır
     }
 
-    /// <summary>
-    /// Seviye atlayınca çağrılır → Rastgele 3 kartı gösterir
-    /// </summary>
     public void Show3RandomCards()
     {
         Debug.Log("Show3RandomCards çağrıldı!");
@@ -75,7 +72,6 @@ public class CardSelectionUIController : MonoBehaviour
             GameObject card = Instantiate(cardPrefab, parentCanvas);
             card.transform.localScale = Vector3.zero;
 
-            // DOTween animasyonları unscaled time ile çalışsın!
             card.transform.DOLocalMove(positions[i], 0.5f)
                 .SetDelay(0.2f * i)
                 .SetUpdate(true);
@@ -121,7 +117,7 @@ public class CardSelectionUIController : MonoBehaviour
                 axe.SetDamage(axe.damage + selectedCard.value);
         }
 
-        // HIZ ARTIŞI KARTI (SamplePlayerAnimationController'a özel!)
+        // SPEED UP
         if (selectedCard.cardType == CardType.Speed)
         {
             var animController = Object.FindFirstObjectByType<SamplePlayerAnimationController>();
@@ -137,12 +133,36 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
-        var xpScript = Object.FindFirstObjectByType<PlayerXP>();
-        if (xpScript != null)
-            xpScript.ResumeGameAfterCardSelection();
+        // ATTACK SPEED UP
+        if (selectedCard.cardType == CardType.AttackSpeedUp)
+        {
+            var animController = Object.FindFirstObjectByType<SamplePlayerAnimationController>();
+            if (animController != null)
+            {
+                animController.IncreaseAttackSpeed(selectedCard.value);
+                Debug.Log("AttackSpeedUp uygulandı!");
+            }
+            else
+            {
+                Debug.LogWarning("SamplePlayerAnimationController bulunamadı!");
+            }
+        }
+
+        // XP BOOST KARTI
+        if (selectedCard.cardType == CardType.XpBoost)
+        {
+            var xpScript = Object.FindFirstObjectByType<PlayerXP>();
+            if (xpScript != null)
+            {
+                xpScript.xpMultiplier *= selectedCard.value;
+                Debug.Log("XP Boost kartı uygulandı! Yeni çarpan: " + xpScript.xpMultiplier);
+            }
+        }
+
+        var xpScript2 = Object.FindFirstObjectByType<PlayerXP>();
+        if (xpScript2 != null)
+            xpScript2.ResumeGameAfterCardSelection();
     }
-
-
 
     private void ClearCards()
     {
@@ -151,7 +171,6 @@ public class CardSelectionUIController : MonoBehaviour
         activeCards.Clear();
     }
 
-    // Test amaçlı: T tuşuna basınca kartları aç
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))

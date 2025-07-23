@@ -15,3 +15,5 @@ MonoBehaviour:
   cardName: HealOver Time
   description: Restores healt over time
   cardSprite: {fileID: 21300000, guid: 2028837de2500d14fbdff2578bfe9a8d, type: 3}
+  cardType: 2
+  value: 2

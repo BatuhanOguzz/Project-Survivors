@@ -15,3 +15,5 @@ MonoBehaviour:
   cardName: XP_Boost
   description: Increases XP gained
   cardSprite: {fileID: 21300000, guid: 391934cf44ff10543a852d5825b90b5b, type: 3}
+  cardType: 5
+  value: 1.5
