@@ -19,18 +19,37 @@ public class CardSelectionUIController : MonoBehaviour
 
     private void Start()
     {
-        // Kart UI başlangıçta gizli olsun
-        gameObject.SetActive(false);
+        gameObject.SetActive(true);
     }
 
     /// <summary>
-    /// Button üzerinden çağrılır → Rastgele 3 kartı gösterir
+    /// Seviye atlayınca çağrılır → Rastgele 3 kartı gösterir
     /// </summary>
     public void Show3RandomCards()
     {
-        if (cardOptions == null || cardOptions.Count < 3)
+        Debug.Log("Show3RandomCards çağrıldı!");
+
+        if (cardOptions == null)
         {
-            Debug.LogWarning("Yeterli kart yok veya cardOptions atanmadı!");
+            Debug.LogError("cardOptions NULL! Inspector'da referans verilmemiş.");
+            return;
+        }
+
+        if (cardOptions.Count < 3)
+        {
+            Debug.LogWarning("Yeterli kart yok! cardOptions.Count: " + cardOptions.Count);
+            return;
+        }
+
+        if (cardPrefab == null)
+        {
+            Debug.LogError("cardPrefab atanmadı! Inspector’da prefab sürüklenmemiş.");
+            return;
+        }
+
+        if (parentCanvas == null)
+        {
+            Debug.LogError("parentCanvas atanmadı! Kartları hangi UI'ya ekleyeceğini bilmiyor.");
             return;
         }
 
@@ -46,7 +65,8 @@ public class CardSelectionUIController : MonoBehaviour
 
     public void ShowCards(List<CardData> cards)
     {
-        gameObject.SetActive(true);
+        Debug.Log("ShowCards çalıştı, kartlar gösteriliyor.");
+        gameObject.SetActive(true); // Kart UI ekranını aktif et
         ClearCards();
 
         for (int i = 0; i < cards.Count; i++)
@@ -54,8 +74,15 @@ public class CardSelectionUIController : MonoBehaviour
             GameObject card = Instantiate(cardPrefab, parentCanvas);
             card.transform.localScale = Vector3.zero;
 
-            card.transform.DOLocalMove(positions[i], 0.5f).SetDelay(0.2f * i);
-            card.transform.DOScale(Vector3.one, 0.5f).SetDelay(0.2f * i).SetEase(Ease.OutBack);
+            // DOTween animasyonları unscaled time ile çalışsın!
+            card.transform.DOLocalMove(positions[i], 0.5f)
+                .SetDelay(0.2f * i)
+                .SetUpdate(true);
+
+            card.transform.DOScale(Vector3.one, 0.5f)
+                .SetDelay(0.2f * i)
+                .SetEase(Ease.OutBack)
+                .SetUpdate(true);
 
             var controller = card.GetComponent<CardUIController>();
             if (controller != null)
@@ -65,7 +92,7 @@ public class CardSelectionUIController : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Kart prefabında CardUIController eksik!");
+                Debug.LogError("Kart prefabında CardUIController component’i yok!");
             }
         }
     }
@@ -75,7 +102,23 @@ public class CardSelectionUIController : MonoBehaviour
         Debug.Log("Seçilen kart: " + selectedCard.cardName);
         gameObject.SetActive(false);
         ClearCards();
-        // Seçilen kartın etkisini burada uygula
+
+#if UNITY_2023_1_OR_NEWER
+        var xpScript = Object.FindFirstObjectByType<PlayerXP>();
+#else
+        var xpScript = FindObjectOfType<PlayerXP>();
+#endif
+
+        if (xpScript != null)
+        {
+            xpScript.ResumeGameAfterCardSelection();
+        }
+        else
+        {
+            Debug.LogWarning("PlayerXP bulunamadı!");
+        }
+
+        // Buraya seçilen kartın etkisi uygulanabilir
     }
 
     private void ClearCards()
@@ -83,5 +126,15 @@ public class CardSelectionUIController : MonoBehaviour
         foreach (var card in activeCards)
             Destroy(card);
         activeCards.Clear();
+    }
+
+    // Test amaçlı: T tuşuna basınca kartları aç
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log("T tuşuna basıldı, kartlar gösteriliyor.");
+            Show3RandomCards();
+        }
     }
 }

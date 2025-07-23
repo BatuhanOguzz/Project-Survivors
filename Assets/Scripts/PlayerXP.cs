@@ -10,6 +10,7 @@ public class PlayerXP : MonoBehaviour
 
     public Slider xpSlider;        // Inspector’dan ata
     public TMP_Text levelText;     // Inspector’dan ata (TextMeshPro)
+    public CardSelectionUIController cardSelectionUI; // Kart UI referansı
 
     void Start()
     {
@@ -62,9 +63,9 @@ public class PlayerXP : MonoBehaviour
     void LevelUp()
     {
         level++;
-        currentXP -= xpToLevel; // Arta kalan XP devreder
+        currentXP -= xpToLevel;
 
-        // İstersen seviye başına gereken XP'yi artırabilirsin:
+        // Seviye başına XP artırma istersen:
         // xpToLevel = Mathf.RoundToInt(xpToLevel * 1.2f);
 
         // Slider'ı güncelle
@@ -81,5 +82,22 @@ public class PlayerXP : MonoBehaviour
         }
 
         Debug.Log("LEVEL UP! Yeni seviye: " + level);
+
+        // Kart seçim ekranını aç
+        if (cardSelectionUI != null)
+        {
+            Time.timeScale = 0f; // Oyunu durdur
+            cardSelectionUI.Show3RandomCards();
+        }
+        else
+        {
+            Debug.LogWarning("CardSelectionUI atanmadı!");
+        }
+    }
+
+    // Kart seçildikten sonra çağrılacak (kart UI'dan tetiklenecek)
+    public void ResumeGameAfterCardSelection()
+    {
+        Time.timeScale = 1f;
     }
 }
