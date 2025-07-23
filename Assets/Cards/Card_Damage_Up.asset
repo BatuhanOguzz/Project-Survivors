@@ -15,3 +15,5 @@ MonoBehaviour:
   cardName: Damage Up
   description: Increases auto hit damage
   cardSprite: {fileID: 21300000, guid: 47d4276c395f539409536d849266ea6d, type: 3}
+  cardType: 0
+  value: 10

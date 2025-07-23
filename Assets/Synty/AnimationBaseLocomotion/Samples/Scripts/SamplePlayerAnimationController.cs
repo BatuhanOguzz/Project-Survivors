@@ -617,7 +617,7 @@ namespace Synty.AnimationBaseLocomotion.Samples
         /// <inheritdoc cref="Update" />
         /// 
 
-        private float attackInterval = 1f; // Saniyede bir saldýrý
+        private float attackInterval = 0.1f; // Saniyede bir saldýrý
         private float lastAttackTime = 0f;
 
 
@@ -1561,6 +1561,22 @@ namespace Synty.AnimationBaseLocomotion.Samples
             SwitchState(AnimationState.Locomotion);
         }
 
+
+        // Hýz artýrýcý kartlar için:
+        public void IncreaseWalkSpeed(float amount)
+        {
+            _walkSpeed += amount;
+            Debug.Log("Walk speed arttý! Yeni walk speed: " + _walkSpeed);
+        }
+
+        public void IncreaseSprintSpeed(float amount)
+        {
+            _sprintSpeed += amount;
+            Debug.Log("Sprint speed arttý! Yeni sprint speed: " + _sprintSpeed);
+        }
+
+
         #endregion
     }
+
 }

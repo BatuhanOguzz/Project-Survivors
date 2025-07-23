@@ -15,3 +15,5 @@ MonoBehaviour:
   cardName: Max Health
   description: Increases maximum healt
   cardSprite: {fileID: 21300000, guid: e70ceb78eaabcad4aa18159dda33b264, type: 3}
+  cardType: 0
+  value: 10

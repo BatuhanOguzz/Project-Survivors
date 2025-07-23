@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using DG.Tweening;
+using Synty.AnimationBaseLocomotion.Samples;
+using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class CardSelectionUIController : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class CardSelectionUIController : MonoBehaviour
 
     private void Start()
     {
-        gameObject.SetActive(true);
+        gameObject.SetActive(false); // Başlangıçta gizli tutmak daha iyi, istediğinde Show3RandomCards ile açılır
     }
 
     /// <summary>
@@ -103,23 +104,45 @@ public class CardSelectionUIController : MonoBehaviour
         gameObject.SetActive(false);
         ClearCards();
 
-#if UNITY_2023_1_OR_NEWER
+        var playerHealth = Object.FindFirstObjectByType<PlayerHealth>();
+        if (playerHealth != null)
+        {
+            if (selectedCard.cardType == CardType.MaxHealthUp ||
+                selectedCard.cardType == CardType.HealOverTime)
+            {
+                playerHealth.ApplyCardUpgrade(selectedCard);
+            }
+        }
+
+        if (selectedCard.cardType == CardType.DamageUp)
+        {
+            var axe = Object.FindFirstObjectByType<AxeHit>();
+            if (axe != null)
+                axe.SetDamage(axe.damage + selectedCard.value);
+        }
+
+        // HIZ ARTIŞI KARTI (SamplePlayerAnimationController'a özel!)
+        if (selectedCard.cardType == CardType.Speed)
+        {
+            var animController = Object.FindFirstObjectByType<SamplePlayerAnimationController>();
+            if (animController != null)
+            {
+                animController.IncreaseWalkSpeed(selectedCard.value);
+                animController.IncreaseSprintSpeed(selectedCard.value);
+                Debug.Log("SpeedUp uygulandı! Yeni walk/sprint speed arttı.");
+            }
+            else
+            {
+                Debug.LogWarning("SamplePlayerAnimationController bulunamadı!");
+            }
+        }
+
         var xpScript = Object.FindFirstObjectByType<PlayerXP>();
-#else
-        var xpScript = FindObjectOfType<PlayerXP>();
-#endif
-
         if (xpScript != null)
-        {
             xpScript.ResumeGameAfterCardSelection();
-        }
-        else
-        {
-            Debug.LogWarning("PlayerXP bulunamadı!");
-        }
-
-        // Buraya seçilen kartın etkisi uygulanabilir
     }
+
+
 
     private void ClearCards()
     {
