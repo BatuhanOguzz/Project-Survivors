@@ -338,6 +338,8 @@ namespace Synty.AnimationBaseLocomotion.Samples
         /// <inheritdoc cref="Start" />
         private void Start()
         {
+            _animator.SetFloat("AttackSpeed", 1f);
+
             _targetLockOnPos = transform.Find("TargetLockOnPos");
 
             _inputReader.onLockOnToggled += ToggleLockOn;
@@ -617,7 +619,7 @@ namespace Synty.AnimationBaseLocomotion.Samples
         /// <inheritdoc cref="Update" />
         /// 
 
-        private float attackInterval = 0.1f; // Saniyede bir saldýrý
+        private float attackInterval = 1f; // Saniyede bir saldýrý
         private float lastAttackTime = 0f;
 
 
@@ -1573,6 +1575,17 @@ namespace Synty.AnimationBaseLocomotion.Samples
         {
             _sprintSpeed += amount;
             Debug.Log("Sprint speed arttý! Yeni sprint speed: " + _sprintSpeed);
+        }
+
+        // Attack speed kartý için:
+        public void IncreaseAttackSpeed(float percent)
+        {
+            attackInterval *= (1f - percent);
+            attackInterval = Mathf.Max(attackInterval, 0.1f);
+
+            float newAttackSpeed = _animator.GetFloat("AttackSpeed") + percent;
+            _animator.SetFloat("AttackSpeed", newAttackSpeed);
+            Debug.Log("Attack animasyon hýzý ayarlandý: " + newAttackSpeed);
         }
 
 

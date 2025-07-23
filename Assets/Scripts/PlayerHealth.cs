@@ -4,8 +4,8 @@ using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHealth = 100;
-    private int currentHealth;
+    public float maxHealth = 100f;
+    private float currentHealth;
 
     public Slider healthSlider;
 
@@ -19,18 +19,18 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
         currentHealth -= amount;
-        currentHealth = Mathf.Max(currentHealth, 0);
+        currentHealth = Mathf.Max(currentHealth, 0f);
         if (healthSlider != null)
             healthSlider.value = currentHealth;
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0f)
             Die();
     }
 
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
         currentHealth += amount;
         currentHealth = Mathf.Min(currentHealth, maxHealth);
@@ -55,7 +55,7 @@ public class PlayerHealth : MonoBehaviour
                 break;
 
             case CardType.HealOverTime:
-                StartCoroutine(HealOverTimeRoutine(card.value, 10, 1f));
+                StartCoroutine(HealOverTimeRoutine(card.value, 10f, 1f));
                 Debug.Log("Heal Over Time kartı seçildi! 10 saniye boyunca iyileşiyor.");
                 break;
 
@@ -63,14 +63,14 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    private IEnumerator HealOverTimeRoutine(int healPerTick, int duration, float interval)
+    private IEnumerator HealOverTimeRoutine(float healPerTick, float duration, float interval)
     {
-        int elapsed = 0;
+        float elapsed = 0f;
         while (elapsed < duration)
         {
             Heal(healPerTick);
             yield return new WaitForSeconds(interval);
-            elapsed += Mathf.RoundToInt(interval);
+            elapsed += interval;
         }
     }
 

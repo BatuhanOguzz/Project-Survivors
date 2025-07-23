@@ -7,6 +7,7 @@ public class PlayerXP : MonoBehaviour
     public int currentXP = 0;
     public int level = 1;
     public int xpToLevel = 100;
+    public float xpMultiplier = 1f; // Başlangıçta normal (1x)
 
     public Slider xpSlider;        // Inspector’dan ata
     public TMP_Text levelText;     // Inspector’dan ata (TextMeshPro)
@@ -34,8 +35,9 @@ public class PlayerXP : MonoBehaviour
 
     public void AddXP(int amount)
     {
-        currentXP += amount;
-        Debug.Log("XP eklendi! Yeni toplam: " + currentXP);
+        int finalXP = Mathf.RoundToInt(amount * xpMultiplier);
+        currentXP += finalXP;
+        Debug.Log("XP eklendi! (Çarpan: " + xpMultiplier + ") Eklenecek XP: " + finalXP + " → Yeni toplam: " + currentXP);
 
         // Level atlama kontrolü
         if (currentXP >= xpToLevel)

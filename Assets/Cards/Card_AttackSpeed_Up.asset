@@ -15,3 +15,5 @@ MonoBehaviour:
   cardName: AttackSpeed Up
   description: Increases attack speed
   cardSprite: {fileID: 21300000, guid: b1a21ed5876ee9a42ac98ad8275698af, type: 3}
+  cardType: 4
+  value: 0.15

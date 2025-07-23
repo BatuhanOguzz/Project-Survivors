@@ -15,3 +15,5 @@ MonoBehaviour:
   cardName: Hermes Speed
   description: Increases walking speed
   cardSprite: {fileID: 21300000, guid: 89dec03b02569db4d807a265f05cb26f, type: 3}
+  cardType: 3
+  value: 0.5

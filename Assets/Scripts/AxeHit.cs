@@ -3,9 +3,9 @@ using UnityEngine;
 public class AxeHit : MonoBehaviour
 {
     public GameObject bloodParticlePrefab;
-    public int damage = 40;
+    public float damage = 40f; // Başlangıç hasarı float
 
-    public void SetDamage(int newDamage)
+    public void SetDamage(float newDamage)
     {
         damage = newDamage;
         Debug.Log("Axe damage güncellendi: " + damage);
@@ -17,7 +17,7 @@ public class AxeHit : MonoBehaviour
         {
             EnemyHealth health = other.GetComponent<EnemyHealth>();
             if (health != null)
-                health.TakeDamage(damage);
+                health.TakeDamage(Mathf.RoundToInt(damage)); // Burada da float gidiyor
 
             if (bloodParticlePrefab != null)
             {

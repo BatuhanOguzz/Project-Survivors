@@ -6,6 +6,8 @@ public enum CardType
     DamageUp,
     HealOverTime,
     Speed,
+    AttackSpeedUp,
+    XpBoost
     // Diðer kart tipleri eklenebilir
 }
 
@@ -16,5 +18,5 @@ public class CardData : ScriptableObject
     public string description;
     public Sprite cardSprite;
     public CardType cardType;    // Kartýn tipi (Inspector’dan seçilecek)
-    public int value;            // Artýþ miktarý
+    public float value;            // Artýþ miktarý
 }
