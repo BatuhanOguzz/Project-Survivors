@@ -10,6 +10,8 @@ public enum CardType
     XpBoost,
     OdinFire,
     SpearThrow,
+    CrowOrbit,
+    AoEKick,
     // Di�er kart tipleri eklenebilir
 }
 

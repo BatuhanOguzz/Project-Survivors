@@ -15,3 +15,5 @@ MonoBehaviour:
   cardName: SPINNING AXE
   description: An aze circles around you, dealing damage
   cardSprite: {fileID: 21300000, guid: fa93f118b91290240937ea7d78831389, type: 3}
+  cardType: 8
+  value: 10
