@@ -7,8 +7,9 @@ public enum CardType
     HealOverTime,
     Speed,
     AttackSpeedUp,
-    XpBoost
-    // Diðer kart tipleri eklenebilir
+    XpBoost,
+    OdinFire,
+    // Diï¿½er kart tipleri eklenebilir
 }
 
 [CreateAssetMenu(menuName = "Card/Upgrade Card")]
@@ -17,6 +18,6 @@ public class CardData : ScriptableObject
     public string cardName;
     public string description;
     public Sprite cardSprite;
-    public CardType cardType;    // Kartýn tipi (Inspector’dan seçilecek)
-    public float value;            // Artýþ miktarý
+    public CardType cardType;    // Kartï¿½n tipi (Inspectorï¿½dan seï¿½ilecek)
+    public float value;            // Artï¿½ï¿½ miktarï¿½
 }

@@ -100,6 +100,7 @@ public class CardSelectionUIController : MonoBehaviour
         gameObject.SetActive(false);
         ClearCards();
 
+        // MaxHealthUp ve HealOverTime için
         var playerHealth = Object.FindFirstObjectByType<PlayerHealth>();
         if (playerHealth != null)
         {
@@ -110,6 +111,7 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
+        // DamageUp için
         if (selectedCard.cardType == CardType.DamageUp)
         {
             var axe = Object.FindFirstObjectByType<AxeHit>();
@@ -117,7 +119,7 @@ public class CardSelectionUIController : MonoBehaviour
                 axe.SetDamage(axe.damage + selectedCard.value);
         }
 
-        // SPEED UP
+        // SpeedUp için
         if (selectedCard.cardType == CardType.Speed)
         {
             var animController = Object.FindFirstObjectByType<SamplePlayerAnimationController>();
@@ -133,7 +135,7 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
-        // ATTACK SPEED UP
+        // AttackSpeedUp için
         if (selectedCard.cardType == CardType.AttackSpeedUp)
         {
             var animController = Object.FindFirstObjectByType<SamplePlayerAnimationController>();
@@ -148,7 +150,7 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
-        // XP BOOST KARTI
+        // XP Boost kartı
         if (selectedCard.cardType == CardType.XpBoost)
         {
             var xpScript = Object.FindFirstObjectByType<PlayerXP>();
@@ -159,10 +161,28 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
+        // Odin Fire kartı: skill açılır, damage stack’lenir!
+        if (selectedCard.cardType == CardType.OdinFire)
+        {
+            var odinFireSkill = Object.FindFirstObjectByType<OdinFireSkill>();
+            if (odinFireSkill != null)
+            {
+                odinFireSkill.skillActive = true;
+                odinFireSkill.damage += selectedCard.value; // HER KART SEÇİMİNDE DAMAGE ARTIYOR
+                Debug.Log("Odin Fire aktif! Yeni damage: " + odinFireSkill.damage);
+            }
+            else
+            {
+                Debug.LogWarning("OdinFireSkill bulunamadı!");
+            }
+        }
+
+        // Kart seçimi sonrası oyunu devam ettir
         var xpScript2 = Object.FindFirstObjectByType<PlayerXP>();
         if (xpScript2 != null)
             xpScript2.ResumeGameAfterCardSelection();
     }
+
 
     private void ClearCards()
     {
