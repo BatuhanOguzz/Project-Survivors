@@ -9640,7 +9640,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillActive: 0
   fireInterval: 5
-  molotovPrefab: {fileID: 225737057}
+  molotovPrefab: {fileID: 0}
   flightTime: 0.6
   arcHeight: 2.5
   damage: 10
@@ -9658,7 +9658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3cdde17c6e34dd297d05aaad8a5037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillActive: 1
+  skillActive: 0
   throwInterval: 2
   spearPrefab: {fileID: 7410949439725912344, guid: b621f0973a68d48a2ac2fb84260aa063, type: 3}
   spearDamage: 30
@@ -10086,66 +10086,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642461815}
   m_CullTransparentMesh: 0
---- !u!1001 &1648107651
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 473511864864785021, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 83.57999
-      objectReference: {fileID: 0}
-    - target: {fileID: 473511864864785021, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.051
-      objectReference: {fileID: 0}
-    - target: {fileID: 473511864864785021, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 8.330128
-      objectReference: {fileID: 0}
-    - target: {fileID: 473511864864785021, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 473511864864785021, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 473511864864785021, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 473511864864785021, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 473511864864785021, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 473511864864785021, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 473511864864785021, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 997987280432044231, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
-      propertyPath: m_Name
-      value: pot
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 473511864864785021, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2081978777}
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
 --- !u!1 &1692800960
 GameObject:
   m_ObjectHideFlags: 0
@@ -12218,6 +12158,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6606311126861558808, guid: a3a751c3ff9cf31489769e2f5e3a4f51, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1531227393}
+    - targetCorrespondingSourceObject: {fileID: 6606311126861558808, guid: a3a751c3ff9cf31489769e2f5e3a4f51, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1531227394}
+    - targetCorrespondingSourceObject: {fileID: 6606311126861558808, guid: a3a751c3ff9cf31489769e2f5e3a4f51, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1531227395}
   m_SourcePrefab: {fileID: 100100000, guid: a3a751c3ff9cf31489769e2f5e3a4f51, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

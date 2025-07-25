@@ -192,6 +192,37 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
+        if (selectedCard.cardType == CardType.CrowOrbit)
+        {
+            var crowSkill = Object.FindFirstObjectByType<CrowOrbitSkill>();
+            if (crowSkill != null)
+            {
+                crowSkill.skillActive = true;
+                crowSkill.damage += selectedCard.value; // Stack! Her kartta hasar artar
+                Debug.Log("Crow Orbit aktif! Yeni hasar: " + crowSkill.damage);
+            }
+            else
+            {
+                Debug.LogWarning("CrowOrbitSkill bulunamadı!");
+            }
+        }
+
+        if (selectedCard.cardType == CardType.AoEKick)
+        {
+            var aoeSkill = Object.FindFirstObjectByType<KickAoESkill>();
+            if (aoeSkill != null)
+            {
+                aoeSkill.skillActive = true;
+                aoeSkill.damage += selectedCard.value; // Her kartta hasar stacklenir
+                Debug.Log("AoE Kick aktif! Yeni hasar: " + aoeSkill.damage);
+            }
+            else
+            {
+                Debug.LogWarning("KickAoESkill bulunamadı!");
+            }
+        }
+
+
         // Kart seçimi sonrası oyunu devam ettir
         var xpScript2 = Object.FindFirstObjectByType<PlayerXP>();
         if (xpScript2 != null)
