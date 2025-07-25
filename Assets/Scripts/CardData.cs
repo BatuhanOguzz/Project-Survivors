@@ -9,6 +9,7 @@ public enum CardType
     AttackSpeedUp,
     XpBoost,
     OdinFire,
+    SpearThrow,
     // Di�er kart tipleri eklenebilir
 }
 
@@ -18,6 +19,6 @@ public class CardData : ScriptableObject
     public string cardName;
     public string description;
     public Sprite cardSprite;
-    public CardType cardType;    // Kart�n tipi (Inspector�dan se�ilecek)
-    public float value;            // Art�� miktar�
+    public CardType cardType;    
+    public float value;           
 }

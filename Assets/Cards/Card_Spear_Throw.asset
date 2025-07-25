@@ -15,3 +15,5 @@ MonoBehaviour:
   cardName: Spear Throw
   description: Throws a spear at intervals
   cardSprite: {fileID: 21300000, guid: 13ea7f014b9261749a22e61b08df8f8e, type: 3}
+  cardType: 7
+  value: 20

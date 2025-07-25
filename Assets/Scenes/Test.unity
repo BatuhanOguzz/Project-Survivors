@@ -7653,6 +7653,23 @@ MonoBehaviour:
   damage: 10
   explosionPrefab: {fileID: 1809022330002312, guid: ed511b7776af6174e9b1255c7a81e59c, type: 3}
   explosionRadius: 2.5
+--- !u!114 &1531227393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531227376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df3cdde17c6e34dd297d05aaad8a5037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillActive: 1
+  throwInterval: 2
+  spearPrefab: {fileID: 7410949439725912344, guid: b621f0973a68d48a2ac2fb84260aa063, type: 3}
+  spearDamage: 30
+  spearSpeed: 20
 --- !u!1 &1571619995
 GameObject:
   m_ObjectHideFlags: 0
@@ -9420,6 +9437,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6606311126861558808, guid: a3a751c3ff9cf31489769e2f5e3a4f51, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1531227388}
+    - targetCorrespondingSourceObject: {fileID: 6606311126861558808, guid: a3a751c3ff9cf31489769e2f5e3a4f51, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1531227393}
   m_SourcePrefab: {fileID: 100100000, guid: a3a751c3ff9cf31489769e2f5e3a4f51, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -3,7 +3,7 @@ using DG.Tweening;
 
 public class OdinFireSkill : MonoBehaviour
 {
-    public bool skillActive = true;             // Sadece kart gelince true olacak
+    public bool skillActive = false;             // Sadece kart gelince true olacak
     public float fireInterval = 2f;              // Kaç saniyede bir atacak
     public GameObject molotovPrefab;             // DOTween ile uçacak prefab
     public float flightTime = 1f;              // Havada kalma süresi

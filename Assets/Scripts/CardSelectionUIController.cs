@@ -177,6 +177,21 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
+        if (selectedCard.cardType == CardType.SpearThrow)
+        {
+            var spearSkill = Object.FindFirstObjectByType<SpearThrowSkill>();
+            if (spearSkill != null)
+            {
+                spearSkill.skillActive = true;
+                spearSkill.spearDamage += selectedCard.value; // Her kartta spear damage artar (stack)
+                Debug.Log("Spear Throw aktif! Yeni spear damage: " + spearSkill.spearDamage);
+            }
+            else
+            {
+                Debug.LogWarning("SpearThrowSkill bulunamadı!");
+            }
+        }
+
         // Kart seçimi sonrası oyunu devam ettir
         var xpScript2 = Object.FindFirstObjectByType<PlayerXP>();
         if (xpScript2 != null)
