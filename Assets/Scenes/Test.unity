@@ -565,7 +565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1033473304}
   enemyPrefabs:
-  - {fileID: 5438178827472081647, guid: a9b7e43515e1d44709461185dddce9dd, type: 3}
+  - {fileID: 3424836467421264260, guid: 6f7ea0c1949cba44da785bcbc0fca5e0, type: 3}
   enemyCount: 20
   spawnRadius: 10
   groundLayer:
