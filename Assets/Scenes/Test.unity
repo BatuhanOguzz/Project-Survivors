@@ -455,16 +455,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a05f863b43c88ff48ad851af5fcccc6c, type: 3}
---- !u!1 &225737057 stripped
+--- !u!1 &225737057
 GameObject:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 997987280432044231, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
-  m_PrefabInstance: {fileID: 1648107651}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &225737060 stripped
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 225737058}
+  m_Layer: 0
+  m_Name: 
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &225737058
 Transform:
-  m_CorrespondingSourceObject: {fileID: 473511864864785021, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
-  m_PrefabInstance: {fileID: 1648107651}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225737057}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &226931137
 GameObject:
   m_ObjectHideFlags: 0
@@ -9640,7 +9661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillActive: 0
   fireInterval: 5
-  molotovPrefab: {fileID: 0}
+  molotovPrefab: {fileID: 997987280432044231, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
   flightTime: 0.6
   arcHeight: 2.5
   damage: 10
@@ -9663,6 +9684,44 @@ MonoBehaviour:
   spearPrefab: {fileID: 7410949439725912344, guid: b621f0973a68d48a2ac2fb84260aa063, type: 3}
   spearDamage: 30
   spearSpeed: 20
+--- !u!114 &1531227394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531227376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd635d5a518e45ddb3a95c170477965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillActive: 0
+  axePrefab: {fileID: 3447744154020654495, guid: 9dc6c34e8d72b4078b0818beaedc5664, type: 3}
+  orbitRadius: 2
+  orbitSpeed: 120
+  spinSpeed: 250
+  damage: 10
+  axeCount: 2
+  orbitHeight: 1.8
+--- !u!114 &1531227395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531227376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa435c7be0634417ad53d65021fa0a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillActive: 0
+  aoeInterval: 5
+  aoeRadius: 4
+  damage: 20
+  aoeFXPrefab: {fileID: 1828717585066262, guid: 15020532ea6e8b449a74e895e1097087, type: 3}
+  fxDuration: 1.2
 --- !u!1001 &1548633390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11588,7 +11647,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 225737060}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 100000, guid: 756d99540142b5e4a8d174e18a6310d9, type: 3}
       propertyPath: m_Name
@@ -11659,11 +11718,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 756d99540142b5e4a8d174e18a6310d9, type: 3}
---- !u!4 &2081978777 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 756d99540142b5e4a8d174e18a6310d9, type: 3}
-  m_PrefabInstance: {fileID: 2081978776}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2098694061
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12160,15 +12214,16 @@ PrefabInstance:
       addedObject: {fileID: 1531227393}
     - targetCorrespondingSourceObject: {fileID: 6606311126861558808, guid: a3a751c3ff9cf31489769e2f5e3a4f51, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1531227394}
+      addedObject: {fileID: 1531227395}
     - targetCorrespondingSourceObject: {fileID: 6606311126861558808, guid: a3a751c3ff9cf31489769e2f5e3a4f51, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1531227395}
+      addedObject: {fileID: 1531227394}
   m_SourcePrefab: {fileID: 100100000, guid: a3a751c3ff9cf31489769e2f5e3a4f51, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 225737058}
   - {fileID: 1485553711}
   - {fileID: 2123646971}
   - {fileID: 1781213183}
@@ -12181,7 +12236,6 @@ SceneRoots:
   - {fileID: 1026456119}
   - {fileID: 1992387306}
   - {fileID: 1692800962}
-  - {fileID: 1648107651}
   - {fileID: 2030510720}
   - {fileID: 1010403062}
   - {fileID: 1548633390}
@@ -12228,3 +12282,4 @@ SceneRoots:
   - {fileID: 376867821}
   - {fileID: 34294486}
   - {fileID: 96356990}
+  - {fileID: 2081978776}
