@@ -623,12 +623,15 @@ namespace Synty.AnimationBaseLocomotion.Samples
         private float lastAttackTime = 0f;
 
 
+        private int _attackIndex = 0; // 0 = Attack_1, 1 = Hit_2
+
         private void Update()
         {
-            // Mouse sol tuþ ile AttackTrigger tetikleme
             if (Time.time - lastAttackTime >= attackInterval)
             {
+                _animator.SetInteger("attackIndex", _attackIndex);
                 _animator.SetTrigger(_attackTriggerHash);
+                _attackIndex = (_attackIndex + 1) % 2;
                 lastAttackTime = Time.time;
             }
 
