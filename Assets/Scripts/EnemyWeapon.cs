@@ -12,6 +12,7 @@ public class EnemyWeapon : MonoBehaviour
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damage);
+                Debug.Log($"[EnemyWeapon] Player hasar aldı: {damage} dmg, yeni canı: {playerHealth.currentHealth}");
             }
         }
     }
