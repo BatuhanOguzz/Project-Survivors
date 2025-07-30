@@ -33,7 +33,12 @@ public class EnemyRagdoll : MonoBehaviour
         SetRagdoll(true);
     }
 
-    // ✅ Yeni fonksiyon: Ragdoll collider'larını player ile çarpışmadan çıkar
+    public void DeactivateRagdoll()
+    {
+        SetRagdoll(false);
+    }
+
+    // ✅ Ragdoll collider'larını player ile çarpışmadan çıkar
     public void IgnorePlayerCollision(Collider playerCollider)
     {
         foreach (var col in ragdollColliders)

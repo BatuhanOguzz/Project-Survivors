@@ -1,51 +1,71 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class WaveManager : MonoBehaviour
 {
     public Transform player;
-
-    // Burada prefab dizisi kullan
-    public GameObject[] enemyPrefabs;
-    public int enemyCount = 5;
-    public float spawnRadius = 10f;
+    public EnemyPoolManager poolManager;
     public LayerMask groundLayer;
+    public float spawnRadius = 15f;
+    public float waveDelay = 5f;
 
-    private int enemiesAlive = 0;
+    public List<WaveData> waves;
+    private int currentWaveIndex = 0;
 
     void Start()
     {
-        StartWave();
+        StartCoroutine(WaveRoutine());
     }
 
-    void StartWave()
+    IEnumerator WaveRoutine()
     {
-        for (int i = 0; i < enemyCount; i++)
+        while (currentWaveIndex < waves.Count)
         {
-            Vector2 randomCircle = Random.insideUnitCircle.normalized * spawnRadius;
-            Vector3 spawnPos = player.position + new Vector3(randomCircle.x, 10, randomCircle.y);
+            WaveData wave = waves[currentWaveIndex];
+            Debug.Log($"Wave {currentWaveIndex + 1} baÅŸladÄ±");
 
-            Ray ray = new Ray(spawnPos, Vector3.down);
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f, groundLayer))
+            float waveTime = 0f;
+            float[] spawnTimers = new float[wave.enemiesToSpawn.Length];
+
+            while (waveTime < wave.waveDuration)
             {
-                spawnPos.y = hit.point.y;
+                waveTime += Time.deltaTime;
 
-                // Burada random veya sýralý prefab seç
-                int randomIndex = Random.Range(0, enemyPrefabs.Length);
-                GameObject enemy = Instantiate(enemyPrefabs[randomIndex], spawnPos, Quaternion.identity);
+                for (int i = 0; i < wave.enemiesToSpawn.Length; i++)
+                {
+                    EnemySpawnInfo info = wave.enemiesToSpawn[i];
+                    spawnTimers[i] += Time.deltaTime;
 
-                enemy.GetComponent<EnemyHealth>().onDeath += OnEnemyDeath;
-                enemiesAlive++;
+                    float spawnInterval = 1f / info.spawnRatePerSecond;
+
+                    if (spawnTimers[i] >= spawnInterval)
+                    {
+                        spawnTimers[i] = 0f;
+                        SpawnEnemy(info.enemyPrefab);
+                    }
+                }
+
+                yield return null;
             }
+
+            Debug.Log($"Wave {currentWaveIndex + 1} bitti");
+            currentWaveIndex++;
+            yield return new WaitForSeconds(waveDelay);
         }
+
+        Debug.Log("TÃ¼m dalgalar bitti!");
     }
 
-    void OnEnemyDeath()
+    void SpawnEnemy(GameObject enemyPrefab)
     {
-        enemiesAlive--;
-        if (enemiesAlive <= 0)
+        Vector2 randCircle = Random.insideUnitCircle.normalized * spawnRadius;
+        Vector3 spawnPos = player.position + new Vector3(randCircle.x, 10, randCircle.y);
+
+        if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 100f, groundLayer))
         {
-            Debug.Log("Wave bitti!");
-            // Sonraki wave’i burada baþlatabilirsin
+            spawnPos.y = hit.point.y;
+            poolManager.GetFromPool(enemyPrefab.name, spawnPos, Quaternion.identity);
         }
     }
 }

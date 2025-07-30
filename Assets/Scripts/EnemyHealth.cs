@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class EnemyHealth : MonoBehaviour
     [Header("XP Ayarları")]
     public GameObject xpOrbPrefab;
     public int xpAmount = 5;
+
+    private void OnEnable()
+    {
+        ResetEnemy();
+    }
 
     void Awake()
     {
@@ -31,8 +37,7 @@ public class EnemyHealth : MonoBehaviour
         onDeath?.Invoke();
 
         DropXP();
-
-        SetLayerRecursively(transform, "DeadEnemy"); // 💀 Cesedi player'dan ayır
+        SetLayerRecursively(transform, "DeadEnemy");
 
         var ragdoll = GetComponent<EnemyRagdoll>();
         if (ragdoll != null)
@@ -46,7 +51,8 @@ public class EnemyHealth : MonoBehaviour
         if (agent != null)
             agent.enabled = false;
 
-        Destroy(gameObject, 4f);
+        // ❗ Object pooling uyumlu: yok etmek yerine pasifleştir
+        StartCoroutine(DeactivateAfterSeconds(4f));
     }
 
     void DropXP()
@@ -65,7 +71,6 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    // ✅ Tüm alt objelerin layer'ını değiştirir
     void SetLayerRecursively(Transform obj, string layerName)
     {
         int layer = LayerMask.NameToLayer(layerName);
@@ -73,5 +78,34 @@ public class EnemyHealth : MonoBehaviour
         {
             child.gameObject.layer = layer;
         }
+    }
+
+    // ❗ Deactivate sonrası yeniden kullanılabilir hale gelsin
+    IEnumerator DeactivateAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        gameObject.SetActive(false);
+    }
+
+    // 💡 Havuzdan çıktığında sıfırlanacak değerler
+    void ResetEnemy()
+    {
+        isDead = false;
+        currentHealth = maxHealth;
+
+        // Layer'ı geri al
+        SetLayerRecursively(transform, "Enemy");
+
+        var ragdoll = GetComponent<EnemyRagdoll>();
+        if (ragdoll != null)
+            ragdoll.DeactivateRagdoll(); // Resetle
+
+        var ai = GetComponent<EnemyAI>();
+        if (ai != null)
+            ai.enabled = true;
+
+        var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if (agent != null)
+            agent.enabled = true;
     }
 }
