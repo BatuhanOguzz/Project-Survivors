@@ -619,7 +619,8 @@ namespace Synty.AnimationBaseLocomotion.Samples
         /// <inheritdoc cref="Update" />
         /// 
 
-        private float attackInterval = 1f; // Saniyede bir saldýrý
+        public float detectionRadius = 3f;
+        private float attackInterval = 1f; // Saniyede bir saldÄ±rÄ±
         private float lastAttackTime = 0f;
 
 
@@ -627,12 +628,15 @@ namespace Synty.AnimationBaseLocomotion.Samples
 
         private void Update()
         {
-            if (Time.time - lastAttackTime >= attackInterval)
+            if (IsEnemyNearby())
             {
-                _animator.SetInteger("attackIndex", _attackIndex);
-                _animator.SetTrigger(_attackTriggerHash);
-                _attackIndex = (_attackIndex + 1) % 2;
-                lastAttackTime = Time.time;
+                if (Time.time - lastAttackTime >= attackInterval)
+                {
+                    _animator.SetInteger("attackIndex", _attackIndex);
+                    _animator.SetTrigger(_attackTriggerHash);
+                    _attackIndex = (_attackIndex + 1) % 2;
+                    lastAttackTime = Time.time;
+                }
             }
 
             switch (_currentState)
@@ -650,6 +654,19 @@ namespace Synty.AnimationBaseLocomotion.Samples
                     UpdateCrouchState();
                     break;
             }
+        }
+
+        private bool IsEnemyNearby()
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
+            foreach (var hitCollider in hitColliders)
+            {
+                if (hitCollider.CompareTag("Enemy"))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -1567,20 +1584,20 @@ namespace Synty.AnimationBaseLocomotion.Samples
         }
 
 
-        // Hýz artýrýcý kartlar için:
+        // Hï¿½z artï¿½rï¿½cï¿½ kartlar iï¿½in:
         public void IncreaseWalkSpeed(float amount)
         {
             _walkSpeed += amount;
-            Debug.Log("Walk speed arttý! Yeni walk speed: " + _walkSpeed);
+            Debug.Log("Walk speed arttï¿½! Yeni walk speed: " + _walkSpeed);
         }
 
         public void IncreaseSprintSpeed(float amount)
         {
             _sprintSpeed += amount;
-            Debug.Log("Sprint speed arttý! Yeni sprint speed: " + _sprintSpeed);
+            Debug.Log("Sprint speed arttï¿½! Yeni sprint speed: " + _sprintSpeed);
         }
 
-        // Attack speed kartý için:
+        // Attack speed kartï¿½ iï¿½in:
         public void IncreaseAttackSpeed(float percent)
         {
             attackInterval *= (1f - percent);
@@ -1588,7 +1605,7 @@ namespace Synty.AnimationBaseLocomotion.Samples
 
             float newAttackSpeed = _animator.GetFloat("AttackSpeed") + percent;
             _animator.SetFloat("AttackSpeed", newAttackSpeed);
-            Debug.Log("Attack animasyon hýzý ayarlandý: " + newAttackSpeed);
+            Debug.Log("Attack animasyon hï¿½zï¿½ ayarlandï¿½: " + newAttackSpeed);
         }
 
 
