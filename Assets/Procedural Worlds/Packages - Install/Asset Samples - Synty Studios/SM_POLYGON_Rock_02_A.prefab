@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 23628267689845962}
   - component: {fileID: 135687095191968830}
   - component: {fileID: 4811041977334872656}
-  m_Layer: 11
+  m_Layer: 10
   m_Name: SM_POLYGON_Rock_02_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}

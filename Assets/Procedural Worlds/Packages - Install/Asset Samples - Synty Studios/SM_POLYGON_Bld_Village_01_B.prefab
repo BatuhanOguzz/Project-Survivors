@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 23327719554329756}
   - component: {fileID: 65580489976468600}
   - component: {fileID: 6217204225933026347}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: SM_POLYGON_Bld_Village_01_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 23131050693226954}
   - component: {fileID: 65106995114737680}
   - component: {fileID: 4174293958833694125}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: SM_POLYGON_Bld_House_01_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
