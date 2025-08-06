@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class AxeHit : MonoBehaviour
 {
     public GameObject bloodParticlePrefab;
@@ -10,9 +11,16 @@ public class AxeHit : MonoBehaviour
     public float hitVolume = 1f;
 
     private AudioSource audioSource;
+    private Collider weaponCollider;
+
+    private bool isHitboxActive = false;
 
     void Awake()
     {
+        weaponCollider = GetComponent<Collider>();
+        weaponCollider.isTrigger = true;
+        weaponCollider.enabled = false; // Baþlangýçta kapalý
+
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
@@ -24,11 +32,33 @@ public class AxeHit : MonoBehaviour
     public void SetDamage(float newDamage)
     {
         damage = newDamage;
-        Debug.Log("Axe damage gÃ¼ncellendi: " + damage);
+        Debug.Log("Axe damage güncellendi: " + damage);
+    }
+
+    /// <summary>
+    /// Animasyon Event ile çaðrýlacak
+    /// </summary>
+    public void EnableHitbox()
+    {
+        isHitboxActive = true;
+        weaponCollider.enabled = true;
+        Debug.Log("Hitbox ENABLED");
+    }
+
+    /// <summary>
+    /// Animasyon Event ile çaðrýlacak
+    /// </summary>
+    public void DisableHitbox()
+    {
+        isHitboxActive = false;
+        weaponCollider.enabled = false;
+        Debug.Log("Hitbox DISABLED");
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!isHitboxActive) return; // Sadece aktifken hasar uygula
+
         if (other.CompareTag("Enemy"))
         {
             EnemyHealth health = other.GetComponent<EnemyHealth>();
@@ -42,7 +72,6 @@ public class AxeHit : MonoBehaviour
                 Destroy(fx, 2f);
             }
 
-            // ðŸŽµ Hit Sound
             if (hitSound != null && audioSource != null)
                 audioSource.PlayOneShot(hitSound, hitVolume);
         }

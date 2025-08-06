@@ -14036,6 +14036,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6606311126861558808, guid: a3a751c3ff9cf31489769e2f5e3a4f51, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2115816482}
+    - targetCorrespondingSourceObject: {fileID: 6606311126861558808, guid: a3a751c3ff9cf31489769e2f5e3a4f51, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2115816490}
     - targetCorrespondingSourceObject: {fileID: 6606311126861597644, guid: a3a751c3ff9cf31489769e2f5e3a4f51, type: 3}
       insertIndex: -1
       addedObject: {fileID: 427137972}
@@ -26450,7 +26453,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: f1790b08a3bb9447dafe1a72fde9f6b8, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &1974692391 stripped
 Transform:
@@ -27897,6 +27900,20 @@ MonoBehaviour:
   xpSlider: {fileID: 783280463}
   levelText: {fileID: 290570876}
   cardSelectionUI: {fileID: 1692800961}
+--- !u!114 &2115816490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308918504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26a69a83e4ed55b47ae36831c9aa0875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightAxe: {fileID: 729622971}
+  leftAxe: {fileID: 342192125}
 --- !u!4 &2138376857 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 447208, guid: bd6a9ab5e7b2ec4488440c51d519bf8b, type: 3}
