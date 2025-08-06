@@ -8,6 +8,10 @@ TagManager:
   - PW - Nature
   - PW - Prop
   - PW - Building
+  - Synty Tree
+  - Synty Medium Farm
+  - Synty Small Farm
+  - Graound
   layers:
   - Default
   - TransparentFX

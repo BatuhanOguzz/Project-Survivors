@@ -145,6 +145,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -4262693146506795612, guid: 625e038fb9496cd4f8a1cd49b30c69e6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2981691753216379117}
+    - targetCorrespondingSourceObject: {fileID: -4262693146506795612, guid: 625e038fb9496cd4f8a1cd49b30c69e6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4551689360873740019}
     - targetCorrespondingSourceObject: {fileID: 1540085667058215675, guid: 625e038fb9496cd4f8a1cd49b30c69e6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9148528161116678692}
@@ -1034,7 +1037,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1115,6 +1118,19 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &4551689360873740019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7924145977610261194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 283c659fcae8e431c8018aa17e4730d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
 --- !u!1 &8280728111713125422 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2610704896538430656, guid: 625e038fb9496cd4f8a1cd49b30c69e6, type: 3}
