@@ -654,6 +654,9 @@ namespace Synty.AnimationBaseLocomotion.Samples
                     UpdateCrouchState();
                     break;
             }
+
+            AutoRotateToEnemy();
+
         }
 
         private bool IsEnemyNearby()
@@ -668,6 +671,44 @@ namespace Synty.AnimationBaseLocomotion.Samples
             }
             return false;
         }
+
+
+        private Transform GetClosestEnemy()
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
+            float closestDistance = Mathf.Infinity;
+            Transform closestEnemy = null;
+
+            foreach (var hitCollider in hitColliders)
+            {
+                if (hitCollider.CompareTag("Enemy"))
+                {
+                    float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestEnemy = hitCollider.transform;
+                    }
+                }
+            }
+
+            return closestEnemy;
+        }
+
+        private void AutoRotateToEnemy()
+        {
+            Transform enemy = GetClosestEnemy();
+            if (enemy == null) return;
+
+            Vector3 direction = (enemy.position - transform.position).normalized;
+            direction.y = 0f; // yukarı bakmasın
+            if (direction == Vector3.zero) return;
+
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSmoothing * Time.deltaTime);
+        }
+
+
 
         /// <summary>
         ///     Updates the animator to have the latest values.
