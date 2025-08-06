@@ -384,7 +384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  attackDistance: 1
+  attackDistance: 1.5
 --- !u!114 &1322855201226702027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,9 +397,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329b9a29a9280ef47adc4c84ec250a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 80
+  maxHealth: 40
   xpOrbPrefab: {fileID: 2680528650648683154, guid: cee5f0b4f71634870b107dfc59eb0a94, type: 3}
-  xpAmount: 15
+  xpAmount: 9
 --- !u!114 &3671216095589018477
 MonoBehaviour:
   m_ObjectHideFlags: 0

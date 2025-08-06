@@ -25878,7 +25878,7 @@ MonoBehaviour:
   - {fileID: 8446017367871249982, guid: 38531df7191cc4a42ba5ef9c1fde4e53, type: 3}
   - {fileID: 1838236137986983605, guid: 5bcfb97b335834f05b29eefa22f32687, type: 3}
   - {fileID: 4389326755387551180, guid: 5998855534d3841eb9f27ceda3ceb763, type: 3}
-  poolSizePerEnemy: 30
+  poolSizePerEnemy: 150
 --- !u!4 &1915271231
 Transform:
   m_ObjectHideFlags: 0
@@ -27843,7 +27843,7 @@ MonoBehaviour:
   molotovPrefab: {fileID: 997987280432044231, guid: 02c6fb22cc2ca47368a36a953fefc745, type: 3}
   flightTime: 0.6
   arcHeight: 2.5
-  damage: 10
+  damage: 13
   explosionPrefab: {fileID: 1809022330002312, guid: ed511b7776af6174e9b1255c7a81e59c, type: 3}
   explosionRadius: 2.5
 --- !u!208 &2115816487
