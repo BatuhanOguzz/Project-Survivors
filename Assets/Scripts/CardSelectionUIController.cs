@@ -141,7 +141,7 @@ public class CardSelectionUIController : MonoBehaviour
                 axe.SetDamage(axe.damage + selectedCard.value);
         }
 
-        // SpeedUp
+        // SpeedUp için
         if (selectedCard.cardType == CardType.Speed)
         {
             var animController = Object.FindFirstObjectByType<SamplePlayerAnimationController>();
@@ -155,7 +155,15 @@ public class CardSelectionUIController : MonoBehaviour
             {
                 Debug.LogWarning("SamplePlayerAnimationController bulunamadı!");
             }
+
+            // NEW: multiplier için takip et
+            var ms = Object.FindFirstObjectByType<MoveSpeedStat>();
+            if (ms != null)
+            {
+                ms.Add(selectedCard.value);
+            }
         }
+
 
         // AttackSpeedUp
         if (selectedCard.cardType == CardType.AttackSpeedUp)

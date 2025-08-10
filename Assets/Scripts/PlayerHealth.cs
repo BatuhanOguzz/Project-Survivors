@@ -10,11 +10,16 @@ public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f;
     public float currentHealth;
+
+    [Header("UI")]
     public Image fadeImage;
     public TextMeshProUGUI youDiedText;
     public Slider healthSlider;
     public TextMeshProUGUI extraInfoText;
     public Canvas UI;
+
+    [Header("Regen / HoT (HUD için)")]
+    public float healOverTime = 0f;   // saniyede iyileşme miktarı (HUD okur)
 
     private bool isDead = false; // 🛡 Ölüm tekrar etmesin
 
@@ -51,7 +56,9 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Min(currentHealth, maxHealth);
         if (healthSlider != null)
             healthSlider.value = currentHealth;
-        Debug.Log("Heal Over Time: +" + amount + " → Şu anki can: " + currentHealth);
+
+        // Debug:
+        // Debug.Log("Heal Over Time: +" + amount + " → Şu anki can: " + currentHealth);
     }
 
     public void ApplyCardUpgrade(CardData card)
@@ -72,6 +79,8 @@ public class PlayerHealth : MonoBehaviour
                 break;
 
             case CardType.HealOverTime:
+                // HUD’da göstermek için anlık HoT değerini set et
+                healOverTime = card.value; // saniyede ne kadar iyileşeceği
                 StartCoroutine(HealOverTimeRoutine(card.value, 10f, 1f));
                 Debug.Log("Heal Over Time kartı seçildi! 10 saniye boyunca iyileşiyor.");
                 break;
@@ -87,6 +96,9 @@ public class PlayerHealth : MonoBehaviour
             yield return new WaitForSeconds(interval);
             elapsed += interval;
         }
+
+        // Süre bitince HUD’da bar/ değer sıfırlansın
+        healOverTime = 0f;
     }
 
     void Die()
@@ -95,7 +107,7 @@ public class PlayerHealth : MonoBehaviour
         isDead = true;
 
         Debug.Log("Player öldü!");
-        UI.gameObject.SetActive(false); // Doğru kullanım
+        if (UI != null) UI.gameObject.SetActive(false);
 
         // 1. Ragdoll aktif et
         PlayerRagdoll ragdoll = GetComponent<PlayerRagdoll>();
@@ -125,8 +137,6 @@ public class PlayerHealth : MonoBehaviour
         MonoBehaviour movementScript = GetComponent<SamplePlayerAnimationController>();
         if (movementScript != null)
             movementScript.enabled = false;
-
-
     }
 
     private IEnumerator FadeInUI(Image image, TextMeshProUGUI text, float duration)
@@ -185,5 +195,4 @@ public class PlayerHealth : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Mevcut sahneyi yeniden yükle
         }
     }
-
 }
