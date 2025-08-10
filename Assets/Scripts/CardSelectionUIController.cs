@@ -20,7 +20,7 @@ public class CardSelectionUIController : MonoBehaviour
 
     private void Start()
     {
-        gameObject.SetActive(false); // Başlangıçta gizli tutmak daha iyi, istediğinde Show3RandomCards ile açılır
+        gameObject.SetActive(false); // Başlangıçta gizli
     }
 
     public void Show3RandomCards()
@@ -32,39 +32,61 @@ public class CardSelectionUIController : MonoBehaviour
             Debug.LogError("cardOptions NULL! Inspector'da referans verilmemiş.");
             return;
         }
-
-        if (cardOptions.Count < 3)
-        {
-            Debug.LogWarning("Yeterli kart yok! cardOptions.Count: " + cardOptions.Count);
-            return;
-        }
-
         if (cardPrefab == null)
         {
             Debug.LogError("cardPrefab atanmadı! Inspector’da prefab sürüklenmemiş.");
             return;
         }
-
         if (parentCanvas == null)
         {
             Debug.LogError("parentCanvas atanmadı! Kartları hangi UI'ya ekleyeceğini bilmiyor.");
             return;
         }
 
+        // 1) Uygun kartları filtrele (CrowOrbit max ise çıkar)
+        var available = new List<CardData>();
+        foreach (var c in cardOptions)
+            if (IsCardAvailable(c)) available.Add(c);
+
+        // 2) 3'ten az uygun kart kaldıysa, ekranı hiç açma → direkt devam
+        if (available.Count < 3)
+        {
+            Debug.Log("Yeterli uygun kart yok, seçim ekranı gösterilmeyecek.");
+            var xpScript = Object.FindFirstObjectByType<PlayerXP>();
+            if (xpScript != null)
+                xpScript.ResumeGameAfterCardSelection();
+            return;
+        }
+
+        // 3) Rastgele 3 benzersiz kart seç
         var selected = new List<CardData>();
         while (selected.Count < 3)
         {
-            var candidate = cardOptions[Random.Range(0, cardOptions.Count)];
+            var candidate = available[Random.Range(0, available.Count)];
             if (!selected.Contains(candidate)) selected.Add(candidate);
         }
 
         ShowCards(selected);
     }
 
+    private bool IsCardAvailable(CardData data)
+    {
+        // CrowOrbit max ise bu kartı sunma
+        if (data.cardType == CardType.CrowOrbit)
+        {
+            var crow = Object.FindFirstObjectByType<CrowOrbitSkill>();
+            if (crow != null && crow.IsMaxed)
+                return false;
+        }
+
+        // Diğer kartlar için özel kural yoksa true
+        return true;
+    }
+
     public void ShowCards(List<CardData> cards)
     {
         Debug.Log("ShowCards çalıştı, kartlar gösteriliyor.");
-        gameObject.SetActive(true); // Kart UI ekranını aktif et
+        gameObject.SetActive(true);
         ClearCards();
 
         for (int i = 0; i < cards.Count; i++)
@@ -100,7 +122,7 @@ public class CardSelectionUIController : MonoBehaviour
         gameObject.SetActive(false);
         ClearCards();
 
-        // MaxHealthUp ve HealOverTime için
+        // MaxHealthUp ve HealOverTime
         var playerHealth = Object.FindFirstObjectByType<PlayerHealth>();
         if (playerHealth != null)
         {
@@ -111,7 +133,7 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
-        // DamageUp için
+        // DamageUp
         if (selectedCard.cardType == CardType.DamageUp)
         {
             var axe = Object.FindFirstObjectByType<AxeHit>();
@@ -119,7 +141,7 @@ public class CardSelectionUIController : MonoBehaviour
                 axe.SetDamage(axe.damage + selectedCard.value);
         }
 
-        // SpeedUp için
+        // SpeedUp
         if (selectedCard.cardType == CardType.Speed)
         {
             var animController = Object.FindFirstObjectByType<SamplePlayerAnimationController>();
@@ -135,7 +157,7 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
-        // AttackSpeedUp için
+        // AttackSpeedUp
         if (selectedCard.cardType == CardType.AttackSpeedUp)
         {
             var animController = Object.FindFirstObjectByType<SamplePlayerAnimationController>();
@@ -150,7 +172,7 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
-        // XP Boost kartı
+        // XP Boost
         if (selectedCard.cardType == CardType.XpBoost)
         {
             var xpScript = Object.FindFirstObjectByType<PlayerXP>();
@@ -161,14 +183,14 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
-        // Odin Fire kartı: skill açılır, damage stack’lenir!
+        // Odin Fire
         if (selectedCard.cardType == CardType.OdinFire)
         {
             var odinFireSkill = Object.FindFirstObjectByType<OdinFireSkill>();
             if (odinFireSkill != null)
             {
                 odinFireSkill.skillActive = true;
-                odinFireSkill.damage += selectedCard.value; // HER KART SEÇİMİNDE DAMAGE ARTIYOR
+                odinFireSkill.damage += selectedCard.value;
                 Debug.Log("Odin Fire aktif! Yeni damage: " + odinFireSkill.damage);
             }
             else
@@ -177,13 +199,14 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
+        // Spear Throw
         if (selectedCard.cardType == CardType.SpearThrow)
         {
             var spearSkill = Object.FindFirstObjectByType<SpearThrowSkill>();
             if (spearSkill != null)
             {
                 spearSkill.skillActive = true;
-                spearSkill.spearDamage += selectedCard.value; // Her kartta spear damage artar (stack)
+                spearSkill.spearDamage += selectedCard.value;
                 Debug.Log("Spear Throw aktif! Yeni spear damage: " + spearSkill.spearDamage);
             }
             else
@@ -192,14 +215,14 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
+        // Crow Orbit — upgrade + 4'ten sonra kart havuzdan kalkacak
         if (selectedCard.cardType == CardType.CrowOrbit)
         {
             var crowSkill = Object.FindFirstObjectByType<CrowOrbitSkill>();
             if (crowSkill != null)
             {
-                crowSkill.skillActive = true;
-                crowSkill.damage += selectedCard.value; // Stack! Her kartta hasar artar
-                Debug.Log("Crow Orbit aktif! Yeni hasar: " + crowSkill.damage);
+                // damage yığmak istemezsen 0f gönder
+                crowSkill.ApplyCardUpgrade(selectedCard.value);
             }
             else
             {
@@ -207,13 +230,14 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
+        // AoE Kick
         if (selectedCard.cardType == CardType.AoEKick)
         {
             var aoeSkill = Object.FindFirstObjectByType<KickAoESkill>();
             if (aoeSkill != null)
             {
                 aoeSkill.skillActive = true;
-                aoeSkill.damage += selectedCard.value; // Her kartta hasar stacklenir
+                aoeSkill.damage += selectedCard.value;
                 Debug.Log("AoE Kick aktif! Yeni hasar: " + aoeSkill.damage);
             }
             else
@@ -222,13 +246,11 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
-
         // Kart seçimi sonrası oyunu devam ettir
         var xpScript2 = Object.FindFirstObjectByType<PlayerXP>();
         if (xpScript2 != null)
             xpScript2.ResumeGameAfterCardSelection();
     }
-
 
     private void ClearCards()
     {
