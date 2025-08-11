@@ -199,6 +199,8 @@ public class CardSelectionUIController : MonoBehaviour
             {
                 odinFireSkill.skillActive = true;
                 odinFireSkill.damage += selectedCard.value;
+
+                SkillLevelRegistry.Instance?.Increment(SkillType.OdinFire);
                 Debug.Log("Odin Fire aktif! Yeni damage: " + odinFireSkill.damage);
             }
             else
@@ -215,6 +217,9 @@ public class CardSelectionUIController : MonoBehaviour
             {
                 spearSkill.skillActive = true;
                 spearSkill.spearDamage += selectedCard.value;
+
+                SkillLevelRegistry.Instance?.Increment(SkillType.SpearThrow);
+
                 Debug.Log("Spear Throw aktif! Yeni spear damage: " + spearSkill.spearDamage);
             }
             else
@@ -231,6 +236,8 @@ public class CardSelectionUIController : MonoBehaviour
             {
                 // damage yığmak istemezsen 0f gönder
                 crowSkill.ApplyCardUpgrade(selectedCard.value);
+
+                SkillLevelRegistry.Instance?.SetLevel(SkillType.CrowOrbit, crowSkill.CurrentLevel, crowSkill.maxLevel);
             }
             else
             {
@@ -246,6 +253,9 @@ public class CardSelectionUIController : MonoBehaviour
             {
                 aoeSkill.skillActive = true;
                 aoeSkill.damage += selectedCard.value;
+
+                SkillLevelRegistry.Instance?.Increment(SkillType.AoEKick);
+
                 Debug.Log("AoE Kick aktif! Yeni hasar: " + aoeSkill.damage);
             }
             else
