@@ -20,7 +20,7 @@ public class CardSelectionUIController : MonoBehaviour
 
     private void Start()
     {
-        gameObject.SetActive(false); // Başlangıçta gizli
+        gameObject.SetActive(false);
     }
 
     public void Show3RandomCards()
@@ -43,15 +43,15 @@ public class CardSelectionUIController : MonoBehaviour
             return;
         }
 
-        // 1) Uygun kartları filtrele (CrowOrbit max ise çıkar)
+        // 1) Uygun kartları filtrele (MAX olan skill kartlarını çıkar)
         var available = new List<CardData>();
         foreach (var c in cardOptions)
             if (IsCardAvailable(c)) available.Add(c);
 
-        // 2) 3'ten az uygun kart kaldıysa, ekranı hiç açma → direkt devam
+        // 2) 3'ten az uygun kart kaldıysa, ekranı hiç açmadan oyuna dön
         if (available.Count < 3)
         {
-            Debug.Log("Yeterli uygun kart yok, seçim ekranı gösterilmeyecek.");
+            Debug.Log("Yeterli uygun kart yok, seçim ekranı açılmayacak.");
             var xpScript = Object.FindFirstObjectByType<PlayerXP>();
             if (xpScript != null)
                 xpScript.ResumeGameAfterCardSelection();
@@ -69,18 +69,29 @@ public class CardSelectionUIController : MonoBehaviour
         ShowCards(selected);
     }
 
+    // MAX'lanan skill kartlarını havuzdan çıkarır
     private bool IsCardAvailable(CardData data)
     {
-        // CrowOrbit max ise bu kartı sunma
-        if (data.cardType == CardType.CrowOrbit)
-        {
-            var crow = Object.FindFirstObjectByType<CrowOrbitSkill>();
-            if (crow != null && crow.IsMaxed)
-                return false;
-        }
+        var reg = SkillLevelRegistry.Instance;
 
-        // Diğer kartlar için özel kural yoksa true
-        return true;
+        switch (data.cardType)
+        {
+            case CardType.OdinFire:
+                return !(reg != null && reg.IsMaxed(SkillType.OdinFire));
+
+            case CardType.SpearThrow:
+                return !(reg != null && reg.IsMaxed(SkillType.SpearThrow));
+
+            case CardType.AoEKick:
+                return !(reg != null && reg.IsMaxed(SkillType.AoEKick));
+
+            case CardType.CrowOrbit:
+                return !(reg != null && reg.IsMaxed(SkillType.CrowOrbit));
+
+            // Diğer kartlar sınırsız yükseltilebilir (istersen burada da kurallar ekleyebilirsin)
+            default:
+                return true;
+        }
     }
 
     public void ShowCards(List<CardData> cards)
@@ -122,7 +133,7 @@ public class CardSelectionUIController : MonoBehaviour
         gameObject.SetActive(false);
         ClearCards();
 
-        // MaxHealthUp ve HealOverTime
+        // MaxHealthUp & HealOverTime
         var playerHealth = Object.FindFirstObjectByType<PlayerHealth>();
         if (playerHealth != null)
         {
@@ -141,7 +152,7 @@ public class CardSelectionUIController : MonoBehaviour
                 axe.SetDamage(axe.damage + selectedCard.value);
         }
 
-        // SpeedUp için
+        // SpeedUp
         if (selectedCard.cardType == CardType.Speed)
         {
             var animController = Object.FindFirstObjectByType<SamplePlayerAnimationController>();
@@ -155,15 +166,7 @@ public class CardSelectionUIController : MonoBehaviour
             {
                 Debug.LogWarning("SamplePlayerAnimationController bulunamadı!");
             }
-
-            // NEW: multiplier için takip et
-            var ms = Object.FindFirstObjectByType<MoveSpeedStat>();
-            if (ms != null)
-            {
-                ms.Add(selectedCard.value);
-            }
         }
-
 
         // AttackSpeedUp
         if (selectedCard.cardType == CardType.AttackSpeedUp)
@@ -191,7 +194,7 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
-        // Odin Fire
+        // Odin Fire (skill + level)
         if (selectedCard.cardType == CardType.OdinFire)
         {
             var odinFireSkill = Object.FindFirstObjectByType<OdinFireSkill>();
@@ -199,7 +202,6 @@ public class CardSelectionUIController : MonoBehaviour
             {
                 odinFireSkill.skillActive = true;
                 odinFireSkill.damage += selectedCard.value;
-
                 SkillLevelRegistry.Instance?.Increment(SkillType.OdinFire);
                 Debug.Log("Odin Fire aktif! Yeni damage: " + odinFireSkill.damage);
             }
@@ -209,7 +211,7 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
-        // Spear Throw
+        // Spear Throw (skill + level)
         if (selectedCard.cardType == CardType.SpearThrow)
         {
             var spearSkill = Object.FindFirstObjectByType<SpearThrowSkill>();
@@ -217,9 +219,7 @@ public class CardSelectionUIController : MonoBehaviour
             {
                 spearSkill.skillActive = true;
                 spearSkill.spearDamage += selectedCard.value;
-
                 SkillLevelRegistry.Instance?.Increment(SkillType.SpearThrow);
-
                 Debug.Log("Spear Throw aktif! Yeni spear damage: " + spearSkill.spearDamage);
             }
             else
@@ -228,16 +228,16 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
-        // Crow Orbit — upgrade + 4'ten sonra kart havuzdan kalkacak
+        // Crow Orbit (skill + level)
         if (selectedCard.cardType == CardType.CrowOrbit)
         {
             var crowSkill = Object.FindFirstObjectByType<CrowOrbitSkill>();
             if (crowSkill != null)
             {
-                // damage yığmak istemezsen 0f gönder
-                crowSkill.ApplyCardUpgrade(selectedCard.value);
-
-                SkillLevelRegistry.Instance?.SetLevel(SkillType.CrowOrbit, crowSkill.CurrentLevel, crowSkill.maxLevel);
+                crowSkill.skillActive = true;
+                crowSkill.ApplyCardUpgrade(selectedCard.value); // damage yığmak istemezsen 0f
+                SkillLevelRegistry.Instance?.Increment(SkillType.CrowOrbit);
+                Debug.Log("Crow Orbit upgrade uygulandı!");
             }
             else
             {
@@ -245,7 +245,7 @@ public class CardSelectionUIController : MonoBehaviour
             }
         }
 
-        // AoE Kick
+        // AoE Kick (skill + level)
         if (selectedCard.cardType == CardType.AoEKick)
         {
             var aoeSkill = Object.FindFirstObjectByType<KickAoESkill>();
@@ -253,9 +253,7 @@ public class CardSelectionUIController : MonoBehaviour
             {
                 aoeSkill.skillActive = true;
                 aoeSkill.damage += selectedCard.value;
-
                 SkillLevelRegistry.Instance?.Increment(SkillType.AoEKick);
-
                 Debug.Log("AoE Kick aktif! Yeni hasar: " + aoeSkill.damage);
             }
             else

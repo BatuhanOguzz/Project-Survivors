@@ -4,8 +4,8 @@ using UnityEngine;
 public class SkillsHUDController : MonoBehaviour
 {
     [Header("Setup")]
-    public Transform listParent;    // Vertical Layout Group olan container
-    public GameObject rowPrefab;    // SkillRowUI içeren prefab
+    public Transform listParent;
+    public GameObject rowPrefab;
     public SkillLevelRegistry registry;
 
     private readonly Dictionary<SkillType, SkillRowUI> _rows = new();
@@ -47,7 +47,9 @@ public class SkillsHUDController : MonoBehaviour
             var row = go.GetComponent<SkillRowUI>();
             if (!row) { Debug.LogError("rowPrefab üzerinde SkillRowUI yok!"); Destroy(go); continue; }
 
-            row.Setup(registry.GetIcon(def.type), registry.GetLabel(def.type));
+            // ÝKON & LABEL'ý entry'den al
+            row.Setup(def.icon, def.label);
+
             _rows[def.type] = row;
             go.SetActive(false); // seviye > 0 olunca açacaðýz
         }

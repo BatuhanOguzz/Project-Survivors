@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,11 +11,11 @@ public class SkillLevelRegistry : MonoBehaviour
     {
         public SkillType type;
         public string label = "Skill";
-        public int maxLevel = 4;          // CrowOrbit için CrowOrbitSkill.maxLevel ile ayný olsun
-        public Sprite icon;               // (opsiyonel) HUD’da ikon
+        public int maxLevel = 4;
+        public Sprite icon;
     }
 
-    [Header("Tanýmlar (Inspector’dan doldur)")]
+    [Header("TanÄ±mlar (Inspectorâ€™dan doldur)")]
     public List<Entry> entries = new();
 
     public event Action OnChanged;
@@ -38,8 +38,6 @@ public class SkillLevelRegistry : MonoBehaviour
 
     public int GetLevel(SkillType t) => _levels.TryGetValue(t, out var lv) ? lv : 0;
     public int GetMax(SkillType t) => _defs.TryGetValue(t, out var e) ? Mathf.Max(1, e.maxLevel) : 1;
-    public string GetLabel(SkillType t) => _defs.TryGetValue(t, out var e) ? e.label : t.ToString();
-    public Sprite GetIcon(SkillType t) => _defs.TryGetValue(t, out var e) ? e.icon : null;
     public bool IsMaxed(SkillType t) => GetLevel(t) >= GetMax(t);
 
     public void Increment(SkillType t)
@@ -60,7 +58,6 @@ public class SkillLevelRegistry : MonoBehaviour
         OnChanged?.Invoke();
     }
 
-    // Ýstersen oyuna baþlarken hepsini sýfýrlamak için:
     public void ResetAll()
     {
         _levels.Clear();
