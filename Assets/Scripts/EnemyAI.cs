@@ -5,7 +5,12 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public float speed = 3f;
-    public float attackDistance = 1f; 
+    public float attackDistance = 1f;
+
+    [Header("NavMesh Auto-Fix")]
+    public bool autoFixOffMesh = true;
+    public float reanchorRadius = 3f; // Yakındaki NavMesh'i ara
+    public int navMeshAreaMask = NavMesh.AllAreas;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -13,37 +18,63 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
-        // NavMesh ve Animator referanslar�n� al
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-
         agent.speed = speed;
 
-        // Oyuncuyu bul
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null)
-            target = playerObj.transform;
+        var playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null) target = playerObj.transform;
+
+        TryReanchorToNavMesh();
+    }
+
+    void OnEnable()
+    {
+        // Pool'dan dönünce ilk framede NavMesh'e oturt
+        TryReanchorToNavMesh();
     }
 
     void Update()
     {
-        if (agent == null || animator == null || target == null)
+        if (agent == null || animator == null || target == null) return;
+
+        // Agent kapalıysa veya NavMesh’te değilse SetDestination çağırma
+        if (!agent.enabled) return;
+
+        if (!agent.isOnNavMesh)
+        {
+            if (autoFixOffMesh) TryReanchorToNavMesh();
             return;
+        }
 
         float distance = Vector3.Distance(transform.position, target.position);
 
-        // Oyuncuyu takip et
+        // Takip
         agent.SetDestination(target.position);
 
-        // Y�r�me kontrol�
-        bool isMoving = agent.velocity.magnitude > 0.1f && distance > attackDistance;
-        animator.SetBool("isWalking", isMoving);
-
-        // Sald�r� kontrol�
+        // Animasyon
         bool isAttacking = distance <= attackDistance;
+        bool isMoving = agent.velocity.magnitude > 0.1f && !isAttacking;
+
+        animator.SetBool("isWalking", isMoving);
         animator.SetBool("isAttacking", isAttacking);
 
-        // Sald�r� s�ras�nda durmas�n� istiyorsan bunu a�:
-         agent.isStopped = isAttacking;
+        // Saldırırken dur
+        agent.isStopped = isAttacking;
+    }
+
+    bool TryReanchorToNavMesh()
+    {
+        if (agent == null || !agent.enabled) return false;
+        if (agent.isOnNavMesh) return true;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(transform.position, out hit, reanchorRadius, navMeshAreaMask))
+        {
+            // Agent'ı güvenli şekilde en yakın NavMesh noktasına ışınla
+            agent.Warp(hit.position);
+            return true;
+        }
+        return false; // Yakında NavMesh yok → spawn noktasını düzeltmelisin
     }
 }

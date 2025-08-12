@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem; // (Eğer new Input System kullanıyorsan, opsiyonel)
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDamageable
 {
     public float maxHealth = 100f;
     public float currentHealth;
