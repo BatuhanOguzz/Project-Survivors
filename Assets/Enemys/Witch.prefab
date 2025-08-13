@@ -477,6 +477,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   attackDistance: 5
+  autoFixOffMesh: 1
+  reanchorRadius: 3
+  navMeshAreaMask: -1
 --- !u!114 &7486540077055059384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,7 +493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 40
-  xpOrbPrefab: {fileID: 2680528650648683154, guid: cee5f0b4f71634870b107dfc59eb0a94, type: 3}
+  xpOrbPrefab: {fileID: 373882351646563080, guid: 2707de9b813d2ca49b61278bc3fbf924, type: 3}
   xpAmount: 20
 --- !u!114 &557266520203945189
 MonoBehaviour:

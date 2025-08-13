@@ -381,7 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 20
-  xpOrbPrefab: {fileID: 3553848563913223789, guid: 819f785260165dc43a6bd000548d4558, type: 3}
+  xpOrbPrefab: {fileID: 373882351646563080, guid: 2707de9b813d2ca49b61278bc3fbf924, type: 3}
   xpAmount: 8
 --- !u!195 &4471295700021923221
 NavMeshAgent:
