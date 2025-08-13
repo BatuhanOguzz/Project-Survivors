@@ -1151,7 +1151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  xpOrbPrefab: {fileID: 2680528650648683154, guid: cee5f0b4f71634870b107dfc59eb0a94, type: 3}
+  xpOrbPrefab: {fileID: 3553848563913223789, guid: 819f785260165dc43a6bd000548d4558, type: 3}
   xpAmount: 100
 --- !u!195 &2516253858969232995
 NavMeshAgent:
@@ -1189,6 +1189,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   attackDistance: 1
+  autoFixOffMesh: 1
+  reanchorRadius: 3
+  navMeshAreaMask: -1
 --- !u!1 &5973559556539139397 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1540085667058215675, guid: 3a419f72b4f997647927612206a904f0, type: 3}
