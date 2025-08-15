@@ -1139,7 +1139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329b9a29a9280ef47adc4c84ec250a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 25
   xpOrbPrefab: {fileID: 373882351646563080, guid: 2707de9b813d2ca49b61278bc3fbf924, type: 3}
   xpAmount: 5
 --- !u!195 &8302640050931113411
@@ -1195,7 +1195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explodeDistance: 1.7
   armDelay: 0.05
-  explosionDamage: 80
+  explosionDamage: 12
   explosionRadius: 2.5
   damageLayers:
     serializedVersion: 2
