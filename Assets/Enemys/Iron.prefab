@@ -400,9 +400,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329b9a29a9280ef47adc4c84ec250a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 40
+  maxHealth: 28
   xpOrbPrefab: {fileID: 373882351646563080, guid: 2707de9b813d2ca49b61278bc3fbf924, type: 3}
-  xpAmount: 9
+  xpAmount: 13
 --- !u!114 &3671216095589018477
 MonoBehaviour:
   m_ObjectHideFlags: 0
