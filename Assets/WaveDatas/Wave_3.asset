@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveDuration: 50
   enemiesToSpawn:
-  - enemyPrefab: {fileID: 7137965941174930690, guid: 0447f0805f096d14ea2e8e8ea53d1b4b, type: 3}
-    spawnRatePerSecond: 0.2
   - enemyPrefab: {fileID: 4389326755387551180, guid: 5998855534d3841eb9f27ceda3ceb763, type: 3}
     spawnRatePerSecond: 1
   - enemyPrefab: {fileID: 8446017367871249982, guid: 38531df7191cc4a42ba5ef9c1fde4e53, type: 3}
     spawnRatePerSecond: 0.5
+  - enemyPrefab: {fileID: 7137965941174930690, guid: 0447f0805f096d14ea2e8e8ea53d1b4b, type: 3}
+    spawnRatePerSecond: 0

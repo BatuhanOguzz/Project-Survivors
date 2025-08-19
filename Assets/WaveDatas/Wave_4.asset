@@ -21,4 +21,4 @@ MonoBehaviour:
   - enemyPrefab: {fileID: 3424836467421264260, guid: 6f7ea0c1949cba44da785bcbc0fca5e0, type: 3}
     spawnRatePerSecond: 0.4
   - enemyPrefab: {fileID: 7137965941174930690, guid: 0447f0805f096d14ea2e8e8ea53d1b4b, type: 3}
-    spawnRatePerSecond: 0.4
+    spawnRatePerSecond: 0

@@ -536,7 +536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 329b9a29a9280ef47adc4c84ec250a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 13
+  maxHealth: 200
   xpOrbPrefab: {fileID: 373882351646563080, guid: 2707de9b813d2ca49b61278bc3fbf924, type: 3}
   xpAmount: 50
 --- !u!114 &6052421671594797818
@@ -588,7 +588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c3d7907c20c95c4692ee693bd28511f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  speed: 3
   attackDistance: 2
   autoFixOffMesh: 1
   reanchorRadius: 3
@@ -1557,7 +1557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283c659fcae8e431c8018aa17e4730d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 30
+  damage: 8
 --- !u!64 &8873252427293331349
 MeshCollider:
   m_ObjectHideFlags: 0
