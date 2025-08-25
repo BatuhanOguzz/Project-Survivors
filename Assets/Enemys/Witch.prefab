@@ -90,6 +90,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8bcae0ba3a72b194cb81886ae24f84f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 557266520203945189}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8bcae0ba3a72b194cb81886ae24f84f2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1017166352616218101}
     - targetCorrespondingSourceObject: {fileID: -2610704896538430656, guid: 8bcae0ba3a72b194cb81886ae24f84f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4954529509335757833}
@@ -510,6 +513,28 @@ MonoBehaviour:
   animator: {fileID: 5496588819268372749}
   ragdollBodies: []
   ragdollColliders: []
+--- !u!114 &-1017166352616218101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291462240388352461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db49faf43486ae469cb54217fadc97c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 0}
+  fireballPrefab: {fileID: 8046555134451655959, guid: 188fa9ac6a3d4464d9e350495da148f4, type: 3}
+  explosionVFXPrefab: {fileID: 0}
+  shootCooldown: 1
+  projectileSpeed: 4
+  homingStrength: 3
+  projectileLifeTime: 10
+  projectileDamage: 10
+  attackBoolName: isAttacking
+  singleActiveProjectile: 1
 --- !u!1 &4363267419991780914 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2422984259158776494, guid: 8bcae0ba3a72b194cb81886ae24f84f2, type: 3}
